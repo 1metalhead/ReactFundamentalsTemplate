@@ -74,7 +74,9 @@ export const CourseInfo = ({
           <div>
             <b>Authors:</b>
             <ul className={styles.authorsList}>
-              {<li>{currentAuthors.join(", ")}</li>}
+              {currentAuthors.map((author) => (
+                <li>{author}</li>
+              ))}
             </ul>
           </div>
         </div>
