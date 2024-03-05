@@ -36,15 +36,18 @@ import { getCourseDuration, formatCreationDate } from "../../../../helpers";
 
 import styles from "./styles.module.css";
 import { Button } from "../../../../common";
+import { useNavigate } from "react-router-dom";
 
-export const CourseCard = ({ course, handleShowCourse, authorsList }) => {
+export const CourseCard = ({ course, authorsList }) => {
   // write your code here
+  const navigate = useNavigate();
   const currentAuthors = [];
   findAuthorName();
   function findAuthorName() {
+    debugger;
     course.authors.forEach((authors) =>
       currentAuthors.push(
-        authorsList.find((author) => author.id === authors).name
+        authorsList.find((author) => author.id === authors)?.name
       )
     );
   }
@@ -71,7 +74,7 @@ export const CourseCard = ({ course, handleShowCourse, authorsList }) => {
         <div className={styles.buttonsContainer}>
           <Button
             buttonText="SHOW COURSE"
-            handleClick={() => handleShowCourse(course.id)}
+            handleClick={() => navigate("/courses/" + course.id)}
           ></Button>
           {/* 
 				reuse Button component for 'Show course' button 

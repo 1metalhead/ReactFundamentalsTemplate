@@ -10,6 +10,9 @@ export const Input = ({
   labelText,
   onChange,
   "data-testid": dataTestId,
+  name,
+  showErrorRequired,
+  type,
 }) => (
   <label className={styles.label}>
     {labelText}
@@ -18,6 +21,11 @@ export const Input = ({
       placeholder={placeholderText}
       className={styles.input}
       data-testid={dataTestId}
+      name={name}
+      type={type}
     />
+    {showErrorRequired && (
+      <span className={styles.err}>{labelText + " is required."}</span>
+    )}
   </label>
 );

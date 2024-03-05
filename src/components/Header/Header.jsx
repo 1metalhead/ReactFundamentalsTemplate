@@ -3,6 +3,7 @@ import React from "react";
 import styles from "./styles.module.css";
 import { Logo } from "./components";
 import { Button } from "../../common";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // Module 1:
 // * add Logo and Button components
@@ -35,13 +36,28 @@ import { Button } from "../../common";
 
 export const Header = () => {
   // write your code here
+  const navigate = useNavigate();
+  const location = useLocation();
+  function handleClick() {
+    localStorage.removeItem("token");
+    navigate("/login");
+  }
+
+  const showUsername =
+    localStorage.getItem("token") &&
+    location.pathname !== "/login" &&
+    location.pathname !== "/registration";
 
   return (
     <div className={styles.headerContainer}>
       <Logo></Logo>
       <div className={styles.userContainer}>
-        <p className={styles.userName}>Harry Potter</p>
-        <Button buttonText="LOGIN"></Button>
+        {showUsername && (
+          <>
+            <p className={styles.userName}>Harry Potter</p>
+            <Button buttonText="LOGOUT" handleClick={handleClick}></Button>
+          </>
+        )}
       </div>
     </div>
   );

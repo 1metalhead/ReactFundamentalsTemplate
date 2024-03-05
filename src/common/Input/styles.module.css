@@ -10,3 +10,8 @@
   display: flex;
   flex-direction: column;
 }
+
+.err{
+  color: red;
+  margin-top: -20px;
+}

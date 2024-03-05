@@ -3,6 +3,7 @@ import React from "react";
 import styles from "./styles.module.css";
 import { CourseCard } from "./components";
 import { Button } from "../../common";
+import { useNavigate } from "react-router-dom";
 
 // Module 1:
 // * render list of components using 'CourseCard' component for each course
@@ -33,8 +34,9 @@ import { Button } from "../../common";
 //   ** Courses should display amount of CourseCard equal length of courses array.
 //   ** CourseForm should be shown after a click on the "Add new course" button.
 
-export const Courses = ({ coursesList, authorsList, handleShowCourse }) => {
+export const Courses = ({ coursesList, authorsList }) => {
   // write your code here
+  const navigate = useNavigate();
 
   // for EmptyCourseList component container use data-testid="emptyContainer" attribute
   // for button in EmptyCourseList component add data-testid="addCourse" attribute
@@ -42,14 +44,13 @@ export const Courses = ({ coursesList, authorsList, handleShowCourse }) => {
   return coursesList.length ? (
     <>
       <div className={styles.panel}>
-        <Button buttonText="ADD NEW COURSE"></Button>
+        <Button
+          buttonText="ADD NEW COURSE"
+          handleClick={() => navigate("/courses/add")}
+        ></Button>
       </div>
       {coursesList.map((course) => (
-        <CourseCard
-          course={course}
-          authorsList={authorsList}
-          handleShowCourse={handleShowCourse}
-        ></CourseCard>
+        <CourseCard course={course} authorsList={authorsList}></CourseCard>
       ))}
     </>
   ) : (
