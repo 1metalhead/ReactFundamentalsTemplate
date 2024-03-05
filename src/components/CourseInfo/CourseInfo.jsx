@@ -42,7 +42,6 @@ export const CourseInfo = ({ coursesList, authorsList }) => {
   const currentAuthors = [];
   findAuthorName();
   function findAuthorName() {
-    debugger;
     currentCourse.authors.forEach((authors) =>
       currentAuthors.push(
         authorsList.find((author) => author.id === authors)?.name

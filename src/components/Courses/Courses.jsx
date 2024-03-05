@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./styles.module.css";
 import { CourseCard } from "./components";
 import { Button } from "../../common";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // Module 1:
 // * render list of components using 'CourseCard' component for each course
@@ -36,7 +36,6 @@ import { useNavigate } from "react-router-dom";
 
 export const Courses = ({ coursesList, authorsList }) => {
   // write your code here
-  const navigate = useNavigate();
 
   // for EmptyCourseList component container use data-testid="emptyContainer" attribute
   // for button in EmptyCourseList component add data-testid="addCourse" attribute
@@ -44,13 +43,14 @@ export const Courses = ({ coursesList, authorsList }) => {
   return coursesList.length ? (
     <>
       <div className={styles.panel}>
-        <Button
-          buttonText="ADD NEW COURSE"
-          handleClick={() => navigate("/courses/add")}
-        ></Button>
+        <Link to="/courses/add">ADD NEW COURSE</Link>
       </div>
       {coursesList.map((course) => (
-        <CourseCard course={course} authorsList={authorsList}></CourseCard>
+        <CourseCard
+          course={course}
+          authorsList={authorsList}
+          data-testid="courseCard"
+        ></CourseCard>
       ))}
     </>
   ) : (

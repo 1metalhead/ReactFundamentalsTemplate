@@ -15,6 +15,7 @@ import React from "react";
 import styles from "./styles.module.css";
 import { Button, Input } from "../../common";
 import { Link, useNavigate } from "react-router-dom";
+import { createUser } from "../../services";
 
 export const Registration = () => {
   // write your code here
@@ -32,7 +33,7 @@ export const Registration = () => {
     password: true,
   });
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     validateFields();
     if (
@@ -40,29 +41,32 @@ export const Registration = () => {
       multipleValues.email.length &&
       multipleValues.password.length
     ) {
-      sendData();
+      const response = await createUser(multipleValues);
+      if (response.status === 201) {
+        navigate("/login");
+      }
     }
   }
 
-  async function sendData() {
-    const newUser = {
-      name: multipleValues.name,
-      email: multipleValues.email,
-      password: multipleValues.password,
-    };
+  // async function sendData() {
+  //   const newUser = {
+  //     name: multipleValues.name,
+  //     email: multipleValues.email,
+  //     password: multipleValues.password,
+  //   };
 
-    const response = await fetch("http://localhost:4000/register", {
-      method: "POST",
-      body: JSON.stringify(newUser),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  //   const response = await fetch("http://localhost:4000/register", {
+  //     method: "POST",
+  //     body: JSON.stringify(newUser),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
 
-    if (response.status === 201) {
-      navigate("/login");
-    }
-  }
+  //   if (response.status === 201) {
+  //     navigate("/login");
+  //   }
+  // }
 
   function validateFields() {
     setIsValid({

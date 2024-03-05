@@ -23,6 +23,8 @@ import { Button, Input } from "../../common";
 
 import { Link, useNavigate } from "react-router-dom";
 
+import { login } from "../../services";
+
 export const Login = () => {
   // write your code here
   const navigate = useNavigate();
@@ -37,34 +39,34 @@ export const Login = () => {
     password: true,
   });
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     validateFields();
     if (multipleValues.email.length && multipleValues.password.length) {
-      sendData();
+      const response = await login(multipleValues);
+      if (response.status === 201) {
+        const result = await response.json();
+        localStorage.setItem("token", result.result);
+        navigate("/courses");
+      }
     }
   }
 
-  async function sendData() {
-    const newUser = {
-      email: multipleValues.email,
-      password: multipleValues.password,
-    };
+  // async function sendData() {
+  //   const newUser = {
+  //     email: multipleValues.email,
+  //     password: multipleValues.password,
+  //   };
 
-    const response = await fetch("http://localhost:4000/login", {
-      method: "POST",
-      body: JSON.stringify(newUser),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  //   const response = await fetch("http://localhost:4000/login", {
+  //     method: "POST",
+  //     body: JSON.stringify(newUser),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
 
-    if (response.status === 201) {
-      const result = await response.json();
-      localStorage.setItem("token", result.result);
-      navigate("/courses");
-    }
-  }
+  // }
 
   function validateFields() {
     setIsValid({

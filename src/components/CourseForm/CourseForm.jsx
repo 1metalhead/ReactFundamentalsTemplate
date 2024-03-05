@@ -200,6 +200,7 @@ export const CourseForm = ({ authorsList, createCourse, createAuthor }) => {
         <Button
           buttonText="CREATE COURSE"
           handleClick={handleCreateCourse}
+          data-testid="createCourseButton"
         ></Button>
       </div>
     </div>

@@ -11,7 +11,7 @@ import {
   CourseForm,
 } from "./components";
 import { mockedAuthorsList, mockedCoursesList } from "./constants";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 
 // Module 1:
 // * use mockedAuthorsList and mockedCoursesList mocked data
@@ -49,55 +49,54 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
-      <div className={styles.wrapper}>
-        <Header></Header>
-        <div className={styles.container}>
-          <Routes>
-            <Route path="/registration" element={<Registration />}></Route>
-            <Route path="/login" element={<Login />}></Route>
-            <Route
-              path="/courses/add"
-              element={
-                <CourseForm
-                  authorsList={localAuthorsList}
-                  createCourse={createCourse}
-                  createAuthor={createAuthor}
-                ></CourseForm>
-              }
-            ></Route>
-            <Route
-              path="/courses/:courseId"
-              element={
-                <CourseInfo
-                  coursesList={localCoursesList}
-                  authorsList={localAuthorsList}
-                ></CourseInfo>
-              }
-            ></Route>
-            <Route
-              path="/courses"
-              element={
-                <Courses
-                  coursesList={localCoursesList}
-                  authorsList={localAuthorsList}
-                ></Courses>
-              }
-            ></Route>
-            <Route
-              path="/"
-              element={
-                localStorage.getItem("token") ? (
-                  <Navigate to="/courses"></Navigate>
-                ) : (
-                  <></>
-                )
-              }
-            ></Route>
-          </Routes>
-        </div>
+    <div className={styles.wrapper}>
+      <Header></Header>
+      <div className={styles.container}>
+        <Routes>
+          <Route path="/registration" element={<Registration />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route
+            path="/courses/add"
+            element={
+              <CourseForm
+                authorsList={localAuthorsList}
+                createCourse={createCourse}
+                createAuthor={createAuthor}
+              ></CourseForm>
+            }
+          ></Route>
+          <Route
+            path="/courses/:courseId"
+            element={
+              <CourseInfo
+                coursesList={localCoursesList}
+                authorsList={localAuthorsList}
+                data-testid="courseInfo"
+              ></CourseInfo>
+            }
+          ></Route>
+          <Route
+            path="/courses"
+            element={
+              <Courses
+                coursesList={localCoursesList}
+                authorsList={localAuthorsList}
+              ></Courses>
+            }
+          ></Route>
+          <Route
+            path="/"
+            element={
+              localStorage.getItem("token") ? (
+                <Navigate to="/courses"></Navigate>
+              ) : (
+                <Login></Login>
+              )
+            }
+          ></Route>
+        </Routes>
       </div>
-    </BrowserRouter>
+    </div>
   );
 }
 
