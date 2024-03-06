@@ -104,7 +104,7 @@ export const Login = () => {
           <Button buttonText="LOGIN" type="submit"></Button>
         </form>
         <p>
-          If you don't have an account you may&nbsp; use{" "}
+          If you don't have an account you can&nbsp;
           <Link to="/registration">Registration</Link>
         </p>
       </div>

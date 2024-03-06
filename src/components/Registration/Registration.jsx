@@ -109,7 +109,7 @@ export const Registration = () => {
             name="password"
             showErrorRequired={!isValid.password}
           ></Input>
-          <Button buttonText="LOGIN" type="submit"></Button>
+          <Button buttonText="LOGIN " type="submit"></Button>
         </form>
         <p>
           If you have an account you may&nbsp;<Link to="/login">Login</Link>
