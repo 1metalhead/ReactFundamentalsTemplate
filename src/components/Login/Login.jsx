@@ -44,9 +44,9 @@ export const Login = () => {
     validateFields();
     if (multipleValues.email.length && multipleValues.password.length) {
       const response = await login(multipleValues);
-      if (response.status === 201) {
-        const result = await response.json();
-        localStorage.setItem("token", result.result);
+      if (response?.status === 201) {
+        const result = await response?.json();
+        localStorage.setItem("token", result?.result);
         navigate("/courses");
       }
     }

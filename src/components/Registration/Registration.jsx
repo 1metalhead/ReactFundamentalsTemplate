@@ -42,7 +42,7 @@ export const Registration = () => {
       multipleValues.password.length
     ) {
       const response = await createUser(multipleValues);
-      if (response.status === 201) {
+      if (response?.status === 201) {
         navigate("/login");
       }
     }
