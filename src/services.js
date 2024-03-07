@@ -17,18 +17,14 @@ export const createUser = async (data) => {
 
 export const login = async (data) => {
   // write your code here
-  const newUser = {
-    email: data.email,
-    password: data.password,
-  };
-
-  return await fetch("http://localhost:4000/login", {
+  const response = await fetch("http://localhost:4000/login", {
     method: "POST",
-    body: JSON.stringify(newUser),
+    body: JSON.stringify(data),
     headers: {
       "Content-Type": "application/json",
     },
   }).catch((err) => new Error(err));
+  return await response.json();
 };
 
 export const getCourses = async () => {
