@@ -1,6 +1,6 @@
 // import React, { useState } from "react";
 
-import { useState } from "react";
+import { useEffect } from "react";
 import styles from "./App.module.css";
 import {
   CourseInfo,
@@ -10,8 +10,12 @@ import {
   Login,
   CourseForm,
 } from "./components";
-import { mockedAuthorsList, mockedCoursesList } from "./constants";
+// import { mockedAuthorsList } from "./constants";
 import { Route, Routes, Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAuthors, getCourses } from "./services";
+import { setCourses } from "./store/slices/coursesSlice";
+import { setAuthors } from "./store/slices/authorsSlice";
 
 // Module 1:
 // * use mockedAuthorsList and mockedCoursesList mocked data
@@ -38,14 +42,39 @@ import { Route, Routes, Navigate } from "react-router-dom";
 function App() {
   // write your code here
   // const [currentCourseId, setCurrentCourseId] = useState();
-  const [localAuthorsList, setLocalAuthorsList] = useState(mockedAuthorsList);
-  const [localCoursesList, setLocalCoursesList] = useState(mockedCoursesList);
+  // const [localAuthorsList, setLocalAuthorsList] = useState(mockedAuthorsList);
+  // const [localCoursesList, setLocalCoursesList] = useState(mockedCoursesList);
+  // let localCoursesList;
+
+  const [localCoursesList, localAuthorsList] = useSelector((store) => {
+    debugger;
+    return [store.courses, store.authors];
+  });
+
+  const dispatch = useDispatch();
+  const fetchInitData = async () => {
+    const courses = await getCourses();
+    dispatch(setCourses(courses.result));
+    const authors = await getAuthors();
+    dispatch(setAuthors(authors.result));
+  };
+  useEffect(() => {
+    fetchInitData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // let localCoursesList = useSelector((store) => {
+  //   debugger;
+  //   return store.courses;
+  // });
 
   function createCourse(course) {
-    setLocalCoursesList([course, ...localCoursesList]);
+    // setLocalCoursesList([course, ...localCoursesList]);
+    dispatch(setCourses(course));
   }
   function createAuthor(author) {
-    setLocalAuthorsList([author, ...localAuthorsList]);
+    // setLocalAuthorsList([author, ...localAuthorsList]);
+    dispatch(setAuthors(author));
   }
 
   return (
@@ -75,15 +104,7 @@ function App() {
               ></CourseInfo>
             }
           ></Route>
-          <Route
-            path="/courses"
-            element={
-              <Courses
-                coursesList={localCoursesList}
-                authorsList={localAuthorsList}
-              ></Courses>
-            }
-          ></Route>
+          <Route path="/courses" element={<Courses></Courses>}></Route>
           <Route
             path="/"
             element={

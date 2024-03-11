@@ -24,9 +24,12 @@ import { Button, Input } from "../../common";
 import { Link, useNavigate } from "react-router-dom";
 
 import { login } from "../../services";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../../store/slices/userSlice";
 
 export const Login = () => {
   // write your code here
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [multipleValues, setMultipleValues] = React.useState({
@@ -47,6 +50,7 @@ export const Login = () => {
       // if (response?.status === 201) {
       //   const result = await response?.json();
       // if (response?.result) {
+      dispatch(setUserData(response));
       localStorage.setItem("token", response?.result);
       navigate("/courses");
       // }

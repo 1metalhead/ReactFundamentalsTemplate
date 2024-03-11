@@ -4,6 +4,8 @@ import styles from "./styles.module.css";
 import { Logo } from "./components";
 import { Button } from "../../common";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { removeUserData } from "../../store/slices/userSlice";
 
 // Module 1:
 // * add Logo and Button components
@@ -36,9 +38,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 export const Header = () => {
   // write your code here
+  const userDetails = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   function handleClick() {
+    dispatch(removeUserData());
     localStorage.removeItem("token");
     navigate("/login");
   }
@@ -54,7 +59,7 @@ export const Header = () => {
       <div className={styles.userContainer}>
         {showUsername && (
           <>
-            <p className={styles.userName}>Harry Potter</p>
+            <p className={styles.userName}>{userDetails.name}</p>
             <Button buttonText="LOGOUT" handleClick={handleClick}></Button>
           </>
         )}

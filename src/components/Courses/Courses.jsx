@@ -4,6 +4,7 @@ import styles from "./styles.module.css";
 import { CourseCard } from "./components";
 import { Button } from "../../common";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // Module 1:
 // * render list of components using 'CourseCard' component for each course
@@ -34,11 +35,16 @@ import { Link } from "react-router-dom";
 //   ** Courses should display amount of CourseCard equal length of courses array.
 //   ** CourseForm should be shown after a click on the "Add new course" button.
 
-export const Courses = ({ coursesList, authorsList }) => {
+export const Courses = () => {
   // write your code here
 
   // for EmptyCourseList component container use data-testid="emptyContainer" attribute
   // for button in EmptyCourseList component add data-testid="addCourse" attribute
+
+  const [coursesList, authorsList] = useSelector((state) => [
+    state.courses,
+    state.authors,
+  ]);
 
   return coursesList.length ? (
     <>

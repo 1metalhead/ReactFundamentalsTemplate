@@ -32,14 +32,19 @@
 
 import React from "react";
 
+import deleteButtonIcon from "../../../../assets/deleteButtonIcon.svg";
+
 import { getCourseDuration, formatCreationDate } from "../../../../helpers";
 
 import styles from "./styles.module.css";
 import { Button } from "../../../../common";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { deleteCourse } from "../../../../store/slices/coursesSlice";
 
 export const CourseCard = ({ course, authorsList }) => {
   // write your code here
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const currentAuthors = [];
   findAuthorName();
@@ -82,6 +87,14 @@ export const CourseCard = ({ course, authorsList }) => {
 				reuse Link component with editButtonIcon from 'src/assets' for 'Update' button with
 						data-testid="updateCourse" 
 			*/}
+          {/* <Button buttonText="src/assets/" data-testid="deleteCourse"></Button> */}
+          <img
+            src={deleteButtonIcon}
+            data-testid="deleteCourse"
+            alt="Delete"
+            style={{ background: "#007298" }}
+            onClick={() => dispatch(deleteCourse(course.id))}
+          />
         </div>
       </div>
     </div>
