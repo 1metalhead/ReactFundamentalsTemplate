@@ -7,7 +7,7 @@ export const coursesSlice = createSlice({
   initialState,
   reducers: {
     setCourses: (courses, payload) => payload.payload,
-    saveCourse: (courses, payload) => [...courses, ...payload.payload],
+    saveCourse: (courses, payload) => [...courses, payload.payload],
     deleteCourse: (courses, payload) =>
       courses.filter((course) => course.id !== payload.payload),
     // updateCourse:

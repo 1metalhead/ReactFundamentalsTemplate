@@ -88,22 +88,27 @@ export const CourseCard = ({ course, authorsList }) => {
 				reuse Link component with editButtonIcon from 'src/assets' for 'Update' button with
 						data-testid="updateCourse" 
 			*/}
-          {/* <Button buttonText="src/assets/" data-testid="deleteCourse"></Button> */}
-          <img
+          <Button
+            buttonText="DELETE"
+            data-testid="deleteCourse"
+            handleClick={() => dispatch(deleteCourse(course.id))}
+          ></Button>
+          <Button buttonText="UPDATE" data-testid="updateCourse"></Button>
+          {/* <img
             src={deleteButtonIcon}
             data-testid="deleteCourse"
             alt="Delete"
             style={{ background: "#007298" }}
             onClick={() => dispatch(deleteCourse(course.id))}
-          />
-          <Link>
+          /> */}
+          {/* <Link>
             <img
               src={editButtonIcon}
               data-testid="updateCourse"
               alt="Delete"
               style={{ background: "#007298" }}
             />
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>

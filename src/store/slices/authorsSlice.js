@@ -7,7 +7,7 @@ export const authorsSlice = createSlice({
   initialState,
   reducers: {
     setAuthors: (authors, payload) => payload.payload,
-    saveAuthor: (authors, payload) => [...authors, ...payload.payload],
+    saveAuthor: (authors, payload) => [...authors, payload.payload],
   },
 });
 
