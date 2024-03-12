@@ -32,14 +32,14 @@
 
 import React from "react";
 
-import deleteButtonIcon from "../../../../assets/deleteButtonIcon.svg";
-import editButtonIcon from "../../../../assets/editButtonIcon.svg";
+// import deleteButtonIcon from "../../../../assets/deleteButtonIcon.svg";
+// import editButtonIcon from "../../../../assets/editButtonIcon.svg";
 
 import { getCourseDuration, formatCreationDate } from "../../../../helpers";
 
 import styles from "./styles.module.css";
 import { Button } from "../../../../common";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteCourse } from "../../../../store/slices/coursesSlice";
 

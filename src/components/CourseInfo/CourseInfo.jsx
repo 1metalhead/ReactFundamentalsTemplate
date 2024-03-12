@@ -22,38 +22,48 @@
 // * remove props 'coursesList', 'authorsList'
 // * use selectors from store/selectors.js to get coursesList, authorsList from store
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { formatCreationDate, getCourseDuration } from "../../helpers";
 
 import styles from "./styles.module.css";
 import { Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getAuthorsSelector, getCoursesSelector } from "../../store/selectors";
 
 // props description
 // * 'coursesList' - list of all courses. You need it to get chosen course from the list
 // * 'authorsList' - list of all authors. You need it to get authors' names for chosen course
 // * 'showCourseId' - id of chosen course. Use it to find needed course on the 'coursesList'.
-export const CourseInfo = ({ coursesList, authorsList }) => {
+export const CourseInfo = () => {
   // write your code here
   const urlParams = useParams();
-  const currentCourse = coursesList.find(
-    (course) => course.id === urlParams.courseId
-  );
-  const currentAuthors = [];
-  findAuthorName();
-  function findAuthorName() {
+  const coursesList = useSelector(getCoursesSelector);
+  const authorsList = useSelector(getAuthorsSelector);
+
+  const [currentCourse, setCurrentCourse] = useState();
+  const [currentAuthors, setCurrentAuthors] = useState();
+
+  useEffect(() => {
+    const currentCourse = coursesList.find(
+      (course) => course.id === urlParams.courseId
+    );
+    setCurrentCourse(currentCourse);
+
+    const currentAuthors = [];
     currentCourse.authors.forEach((authors) =>
       currentAuthors.push(
         authorsList.find((author) => author.id === authors)?.name
       )
     );
-  }
+    setCurrentAuthors(currentAuthors);
+  }, [coursesList, authorsList, urlParams]);
 
   return (
     <div className={styles.container} data-testid="courseInfo">
-      <h1>{currentCourse.title}</h1>
+      <h1>{currentCourse?.title}</h1>
       <div className={styles.courseInfo}>
-        <p className={styles.description}>{currentCourse.description}</p>
+        <p className={styles.description}>{currentCourse?.description}</p>
         <div>
           <p>
             <b>ID: </b>
@@ -61,16 +71,20 @@ export const CourseInfo = ({ coursesList, authorsList }) => {
           </p>
           <p>
             <b>Duration: </b>
-            {getCourseDuration(currentCourse.duration)}
+            {currentCourse?.duration
+              ? getCourseDuration(currentCourse?.duration)
+              : ""}
           </p>
           <p>
             <b>Created: </b>
-            {formatCreationDate(currentCourse.creationDate)}
+            {currentCourse?.creationDate
+              ? formatCreationDate(currentCourse?.creationDate)
+              : ""}
           </p>
           <div>
             <b>Authors:</b>
             <ul className={styles.authorsList}>
-              {currentAuthors.map((author) => (
+              {currentAuthors?.map((author) => (
                 <li>{author}</li>
               ))}
             </ul>
