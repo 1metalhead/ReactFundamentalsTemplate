@@ -53,7 +53,7 @@ import { CreateAuthor } from "../../components/CourseForm/components/CreateAutho
 import { AuthorItem } from "../../components/CourseForm/components/AuthorItem";
 import { useNavigate } from "react-router-dom";
 
-export const CourseForm = ({ authorsList, createCourse, createAuthor }) => {
+export const CourseForm = ({ authorsList, createCourse }) => {
   //write your code here
 
   const navigate = useNavigate();
@@ -96,7 +96,7 @@ export const CourseForm = ({ authorsList, createCourse, createAuthor }) => {
   function onCreateAuthor(event, author) {
     event.preventDefault();
     setLocalAuthorsList([{ name: author, id: "abc" }, ...localAuthorsList]);
-    createAuthor({ name: author, id: "abc" });
+    // createAuthor({ name: author, id: "abc" });
   }
 
   function handleCreateCourse() {

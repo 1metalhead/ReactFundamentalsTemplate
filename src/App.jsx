@@ -15,7 +15,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuthors, getCourses } from "./services";
 import { setCourses, saveCourse } from "./store/slices/coursesSlice";
-import { setAuthors, saveAuthor } from "./store/slices/authorsSlice";
+import { setAuthors } from "./store/slices/authorsSlice";
 
 // Module 1:
 // * use mockedAuthorsList and mockedCoursesList mocked data
@@ -69,10 +69,10 @@ function App() {
     // setLocalCoursesList([course, ...localCoursesList]);
     dispatch(saveCourse(course));
   }
-  function createAuthor(author) {
-    // setLocalAuthorsList([author, ...localAuthorsList]);
-    dispatch(saveAuthor(author));
-  }
+  // function createAuthor(author) {
+  //   // setLocalAuthorsList([author, ...localAuthorsList]);
+  //   dispatch(saveAuthor(author));
+  // }
 
   return (
     <div className={styles.wrapper}>
@@ -87,7 +87,6 @@ function App() {
               <CourseForm
                 authorsList={localAuthorsList}
                 createCourse={createCourse}
-                createAuthor={createAuthor}
               ></CourseForm>
             }
           ></Route>
