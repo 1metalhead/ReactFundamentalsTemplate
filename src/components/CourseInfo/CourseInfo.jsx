@@ -51,7 +51,7 @@ export const CourseInfo = () => {
     setCurrentCourse(currentCourse);
 
     const currentAuthors = [];
-    currentCourse.authors.forEach((authors) =>
+    currentCourse?.authors?.forEach((authors) =>
       currentAuthors.push(
         authorsList.find((author) => author.id === authors)?.name
       )

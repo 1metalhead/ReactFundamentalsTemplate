@@ -46,7 +46,7 @@ function App() {
   // const [localCoursesList, setLocalCoursesList] = useState(mockedCoursesList);
   // let localCoursesList;
 
-  const localCoursesList = useSelector((store) => store.courses);
+  // const localCoursesList = useSelector((store) => store.courses);
   const localAuthorsList = useSelector((store) => store.authors);
   const dispatch = useDispatch();
   const fetchInitData = async () => {
@@ -92,13 +92,7 @@ function App() {
           ></Route>
           <Route
             path="/courses/:courseId"
-            element={
-              <CourseInfo
-                coursesList={localCoursesList}
-                authorsList={localAuthorsList}
-                data-testid="courseInfo"
-              ></CourseInfo>
-            }
+            element={<CourseInfo data-testid="courseInfo"></CourseInfo>}
           ></Route>
           <Route path="/courses" element={<Courses></Courses>}></Route>
           <Route
