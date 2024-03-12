@@ -174,7 +174,11 @@ export const CourseForm = ({ authorsList, createCourse, createAuthor }) => {
             <div className={styles.authorsContainer}>
               <h3>Authors List</h3>
               {localAuthorsList.map((author) => (
-                <AuthorItem author={author} addAuthor={addAuthor}></AuthorItem>
+                <AuthorItem
+                  author={author}
+                  addAuthor={addAuthor}
+                  key={author.id}
+                ></AuthorItem>
               ))}
             </div>
           </div>

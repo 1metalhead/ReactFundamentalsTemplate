@@ -33,12 +33,13 @@
 import React from "react";
 
 import deleteButtonIcon from "../../../../assets/deleteButtonIcon.svg";
+import editButtonIcon from "../../../../assets/editButtonIcon.svg";
 
 import { getCourseDuration, formatCreationDate } from "../../../../helpers";
 
 import styles from "./styles.module.css";
 import { Button } from "../../../../common";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteCourse } from "../../../../store/slices/coursesSlice";
 
@@ -95,6 +96,14 @@ export const CourseCard = ({ course, authorsList }) => {
             style={{ background: "#007298" }}
             onClick={() => dispatch(deleteCourse(course.id))}
           />
+          <Link>
+            <img
+              src={editButtonIcon}
+              data-testid="updateCourse"
+              alt="Delete"
+              style={{ background: "#007298" }}
+            />
+          </Link>
         </div>
       </div>
     </div>

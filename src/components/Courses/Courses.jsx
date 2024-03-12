@@ -41,10 +41,8 @@ export const Courses = () => {
   // for EmptyCourseList component container use data-testid="emptyContainer" attribute
   // for button in EmptyCourseList component add data-testid="addCourse" attribute
 
-  const [coursesList, authorsList] = useSelector((state) => [
-    state.courses,
-    state.authors,
-  ]);
+  const coursesList = useSelector((state) => state.courses);
+  const authorsList = useSelector((state) => state.authors);
 
   return coursesList.length ? (
     <>
@@ -56,6 +54,7 @@ export const Courses = () => {
           course={course}
           authorsList={authorsList}
           data-testid="courseCard"
+          key={course.id}
         ></CourseCard>
       ))}
     </>

@@ -50,7 +50,13 @@ export const Login = () => {
       // if (response?.status === 201) {
       //   const result = await response?.json();
       // if (response?.result) {
-      dispatch(setUserData(response));
+      dispatch(
+        setUserData({
+          email: response?.user?.email,
+          name: response?.user?.name,
+          token: response?.result,
+        })
+      );
       localStorage.setItem("token", response?.result);
       navigate("/courses");
       // }

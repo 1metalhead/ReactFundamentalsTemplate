@@ -15,9 +15,9 @@ export const userSlice = createSlice({
       debugger;
       return {
         isAuth: true,
-        name: payload.payload.user.name,
-        email: payload.payload.user.email,
-        token: payload.payload.result,
+        name: payload.payload.name,
+        email: payload.payload.email,
+        token: payload.payload.token,
       };
     },
     removeUserData: (userData, payload) => initialState,

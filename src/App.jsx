@@ -14,8 +14,8 @@ import {
 import { Route, Routes, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuthors, getCourses } from "./services";
-import { setCourses } from "./store/slices/coursesSlice";
-import { setAuthors } from "./store/slices/authorsSlice";
+import { setCourses, saveCourse } from "./store/slices/coursesSlice";
+import { setAuthors, saveAuthor } from "./store/slices/authorsSlice";
 
 // Module 1:
 // * use mockedAuthorsList and mockedCoursesList mocked data
@@ -46,11 +46,8 @@ function App() {
   // const [localCoursesList, setLocalCoursesList] = useState(mockedCoursesList);
   // let localCoursesList;
 
-  const [localCoursesList, localAuthorsList] = useSelector((store) => {
-    debugger;
-    return [store.courses, store.authors];
-  });
-
+  const localCoursesList = useSelector((store) => store.courses);
+  const localAuthorsList = useSelector((store) => store.authors);
   const dispatch = useDispatch();
   const fetchInitData = async () => {
     const courses = await getCourses();
@@ -70,11 +67,11 @@ function App() {
 
   function createCourse(course) {
     // setLocalCoursesList([course, ...localCoursesList]);
-    dispatch(setCourses(course));
+    dispatch(saveCourse(course));
   }
   function createAuthor(author) {
     // setLocalAuthorsList([author, ...localAuthorsList]);
-    dispatch(setAuthors(author));
+    dispatch(saveAuthor(author));
   }
 
   return (
