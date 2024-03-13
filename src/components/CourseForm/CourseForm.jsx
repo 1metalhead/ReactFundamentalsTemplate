@@ -117,7 +117,7 @@ export const CourseForm = () => {
           title: multipleValues.title,
           description: multipleValues.description,
           creationDate: "08/03/2021", //new Date(),
-          duration: multipleValues.duration,
+          duration: Number(multipleValues.duration),
           authors: courseAuthors.map((authors) => authors.id),
         })
       );
