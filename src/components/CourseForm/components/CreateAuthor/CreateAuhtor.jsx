@@ -4,7 +4,7 @@ import { Button, Input } from "../../../../common";
 import { useDispatch } from "react-redux";
 import { saveAuthor } from "../../../../store/slices/authorsSlice";
 
-export const CreateAuthor = ({ onCreateAuthor }) => {
+export const CreateAuthor = () => {
   // write your code here
   const dispatch = useDispatch();
   const [authorName, setAuthorName] = useState();
@@ -24,8 +24,8 @@ export const CreateAuthor = ({ onCreateAuthor }) => {
         buttonText="CREATE AUTHOR"
         data-testid="createAuthorButton"
         handleClick={(event) => {
+          event.preventDefault();
           dispatch(saveAuthor({ name: authorName, id: "abc" }));
-          onCreateAuthor(event, authorName);
         }}
       ></Button>
     </div>

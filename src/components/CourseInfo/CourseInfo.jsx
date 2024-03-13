@@ -91,7 +91,7 @@ export const CourseInfo = () => {
           </div>
         </div>
       </div>
-      <Link to="/courses">BACK</Link>
+      <Link to="/courses">Back</Link>
     </div>
   );
 };

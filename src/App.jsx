@@ -12,9 +12,9 @@ import {
 } from "./components";
 // import { mockedAuthorsList } from "./constants";
 import { Route, Routes, Navigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getAuthors, getCourses } from "./services";
-import { setCourses, saveCourse } from "./store/slices/coursesSlice";
+import { setCourses } from "./store/slices/coursesSlice";
 import { setAuthors } from "./store/slices/authorsSlice";
 
 // Module 1:
@@ -47,7 +47,6 @@ function App() {
   // let localCoursesList;
 
   // const localCoursesList = useSelector((store) => store.courses);
-  const localAuthorsList = useSelector((store) => store.authors);
   const dispatch = useDispatch();
   const fetchInitData = async () => {
     const courses = await getCourses();
@@ -65,10 +64,10 @@ function App() {
   //   return store.courses;
   // });
 
-  function createCourse(course) {
-    // setLocalCoursesList([course, ...localCoursesList]);
-    dispatch(saveCourse(course));
-  }
+  // function createCourse(course) {
+  //   // setLocalCoursesList([course, ...localCoursesList]);
+  //   dispatch(saveCourse(course));
+  // }
   // function createAuthor(author) {
   //   // setLocalAuthorsList([author, ...localAuthorsList]);
   //   dispatch(saveAuthor(author));
@@ -83,12 +82,7 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route
             path="/courses/add"
-            element={
-              <CourseForm
-                authorsList={localAuthorsList}
-                createCourse={createCourse}
-              ></CourseForm>
-            }
+            element={<CourseForm></CourseForm>}
           ></Route>
           <Route
             path="/courses/:courseId"

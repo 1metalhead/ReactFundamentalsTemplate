@@ -30,7 +30,7 @@
 //   ** CourseCard should display authors list.
 //   ** CourseCard should display created date in the correct format.
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 // import deleteButtonIcon from "../../../../assets/deleteButtonIcon.svg";
 // import editButtonIcon from "../../../../assets/editButtonIcon.svg";
@@ -40,22 +40,26 @@ import { getCourseDuration, formatCreationDate } from "../../../../helpers";
 import styles from "./styles.module.css";
 import { Button } from "../../../../common";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteCourse } from "../../../../store/slices/coursesSlice";
+import { getAuthorsSelector } from "../../../../store/selectors";
 
-export const CourseCard = ({ course, authorsList }) => {
+export const CourseCard = ({ course }) => {
   // write your code here
+  const authorsList = useSelector(getAuthorsSelector);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const currentAuthors = [];
-  findAuthorName();
-  function findAuthorName() {
-    course.authors.forEach((authors) =>
-      currentAuthors.push(
-        authorsList.find((author) => author.id === authors)?.name
-      )
-    );
-  }
+  const [currentAuthors, setCurrentAuthors] = useState([]);
+
+  useEffect(() => {
+    course?.authors?.forEach((authors) => {
+      const currentAuthors = [];
+      currentAuthors?.push(
+        authorsList?.find((author) => author.id === authors)?.name
+      );
+      setCurrentAuthors(currentAuthors);
+    });
+  }, [authorsList, course]);
 
   return (
     <div className={styles.cardContainer} data-testid="courseCard">
@@ -66,7 +70,7 @@ export const CourseCard = ({ course, authorsList }) => {
       <div className={styles.cardDetails}>
         <p>
           <b>Authors: </b>
-          {currentAuthors.join(", ")}
+          {currentAuthors?.join(", ")}
         </p>
         <p>
           <b>Duration:</b>

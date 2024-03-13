@@ -44,7 +44,7 @@
 //   **  CourseForm 'Add author' button click should add an author to the course authors list.
 //   **  CourseForm 'Delete author' button click should delete an author from the course list.
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import styles from "./styles.module.css";
 import { Button, Input } from "../../common";
@@ -52,13 +52,22 @@ import { getCourseDuration } from "../../helpers/getCourseDuration";
 import { CreateAuthor } from "../../components/CourseForm/components/CreateAuthor";
 import { AuthorItem } from "../../components/CourseForm/components/AuthorItem";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAuthorsSelector } from "../../store/selectors";
+import { saveCourse } from "../../store/slices/coursesSlice";
 
-export const CourseForm = ({ authorsList, createCourse }) => {
+export const CourseForm = () => {
   //write your code here
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const authorsList = useSelector(getAuthorsSelector);
 
   const [localAuthorsList, setLocalAuthorsList] = useState(authorsList);
+
+  useEffect(() => {
+    setLocalAuthorsList(authorsList);
+  }, [authorsList]);
 
   const [multipleValues, setMultipleValues] = useState({
     title: "",
@@ -93,23 +102,25 @@ export const CourseForm = ({ authorsList, createCourse }) => {
     setLocalAuthorsList([currentAuthor, ...localAuthorsList]);
   }
 
-  function onCreateAuthor(event, author) {
-    event.preventDefault();
-    setLocalAuthorsList([{ name: author, id: "abc" }, ...localAuthorsList]);
-    // createAuthor({ name: author, id: "abc" });
-  }
+  // function onCreateAuthor(event, author) {
+  //   // event.preventDefault();
+  //   // setLocalAuthorsList([{ name: author, id: "abc" }, ...localAuthorsList]);
+  //   // createAuthor({ name: author, id: "abc" });
+  // }
 
   function handleCreateCourse() {
     const validObj = validateFields();
     if (validObj.title && validObj.description && validObj.duration) {
-      createCourse({
-        id: "xyz",
-        title: multipleValues.title,
-        description: multipleValues.description,
-        creationDate: "08/03/2021", //new Date(),
-        duration: multipleValues.duration,
-        authors: courseAuthors.map((authors) => authors.id),
-      });
+      dispatch(
+        saveCourse({
+          id: "xyz",
+          title: multipleValues.title,
+          description: multipleValues.description,
+          creationDate: "08/03/2021", //new Date(),
+          duration: multipleValues.duration,
+          authors: courseAuthors.map((authors) => authors.id),
+        })
+      );
       navigate("/courses");
     }
   }
@@ -170,7 +181,7 @@ export const CourseForm = ({ authorsList, createCourse }) => {
               <p>{duration}</p>
             </div>
             <h2>Authors</h2>
-            <CreateAuthor onCreateAuthor={onCreateAuthor}></CreateAuthor>
+            <CreateAuthor></CreateAuthor>
             <div className={styles.authorsContainer}>
               <h3>Authors List</h3>
               {localAuthorsList.map((author) => (
