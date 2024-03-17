@@ -47,7 +47,7 @@ function App() {
 
   // const localCoursesList = useSelector((store) => store.courses);
   const dispatch = useDispatch();
-  dispatch(getCoursesThunk());
+  dispatch(() => getCoursesThunk(dispatch));
   dispatch(getAuthorsThunk());
 
   // const fetchInitData = async () => {

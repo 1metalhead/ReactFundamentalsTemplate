@@ -2,7 +2,7 @@ import { saveAuthor, setAuthors } from "./store/slices/authorsSlice";
 import {
   deleteCourse,
   saveCourse,
-  setCourses,
+  // setCourses,
   updateCourse,
 } from "./store/slices/coursesSlice";
 import { removeUserData, setUserData } from "./store/slices/userSlice";
@@ -36,7 +36,7 @@ export const login = async (data) => {
   return await response.json();
 };
 
-export const getCourses = async (dispatch) => {
+export const getCourses = async () => {
   // write your code here
   const response = await fetch("http://localhost:4000/courses/all", {
     method: "GET",
@@ -44,9 +44,9 @@ export const getCourses = async (dispatch) => {
       "Content-Type": "application/json",
     },
   }).catch((err) => new Error(err));
-  const result = await response.json();
-  dispatch(setCourses(result.result));
-  // return await response.json();
+  // const result = await response.json();
+  // dispatch(setCourses(result.result));
+  return await response.json();
 };
 
 export const getAuthors = async (dispatch) => {

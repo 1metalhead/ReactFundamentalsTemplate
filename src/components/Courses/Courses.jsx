@@ -80,7 +80,9 @@ export const Courses = () => {
           </div>
         </>
       ) : (
-        <p></p>
+        <p>
+          You don't have permissions to create a course. Please log in as ADMIN
+        </p>
       )}
     </>
   );

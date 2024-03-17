@@ -39,7 +39,7 @@ import { getCourseDuration, formatCreationDate } from "../../../../helpers";
 
 import styles from "./styles.module.css";
 import { Button } from "../../../../common";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAuthorsSelector,
@@ -105,11 +105,17 @@ export const CourseCard = ({ course }) => {
                   dispatch(deleteCourseThunk(dispatch, course.id))
                 }
               ></Button>
-              <Button
+              <Link
+                to={`/courses/update/${course.id}`}
+                data-testid="updateCourse"
+              >
+                UPDATE
+              </Link>
+              {/* <Button
                 buttonText="UPDATE"
                 data-testid="updateCourse"
                 handleClick={() => navigate(`/courses/update/${course.id}`)}
-              ></Button>
+              ></Button> */}
             </>
           ) : (
             ""
