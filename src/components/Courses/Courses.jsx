@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import styles from "./styles.module.css";
 import { CourseCard } from "./components";
 import { Button } from "../../common";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserThunk } from "../../store/thunks/userThunk";
+import { getCoursesSelector, getUserRoleSelector } from "../../store/selectors";
 
 // Module 1:
 // * render list of components using 'CourseCard' component for each course
@@ -41,13 +43,24 @@ export const Courses = () => {
   // for EmptyCourseList component container use data-testid="emptyContainer" attribute
   // for button in EmptyCourseList component add data-testid="addCourse" attribute
 
-  const coursesList = useSelector((state) => state.courses);
+  const coursesList = useSelector(getCoursesSelector);
+  const currentUserRole = useSelector(getUserRoleSelector);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const isUserLoginToken = localStorage.getItem("token");
+    if (isUserLoginToken) {
+      dispatch(getUserThunk());
+    }
+  }, [dispatch]);
 
   return coursesList.length ? (
     <>
-      <div className={styles.panel}>
-        <Link to="/courses/add">ADD NEW COURSE</Link>
-      </div>
+      {currentUserRole === "admin" && (
+        <div className={styles.panel}>
+          <Link to="/courses/add">ADD NEW COURSE</Link>
+        </div>
+      )}
       {coursesList.map((course) => (
         <CourseCard
           course={course}
@@ -57,10 +70,18 @@ export const Courses = () => {
       ))}
     </>
   ) : (
-    <div data-testid="emptyContainer">
-      <h1>Your List Is Empty</h1>
-      <p>Please use "Add New Course" button to add your first course</p>
-      <Button buttonText="ADD NEW COURSE" data-testid="addCourse" />
-    </div>
+    <>
+      {currentUserRole === "admin" ? (
+        <>
+          <div data-testid="emptyContainer">
+            <h1>Your List Is Empty</h1>
+            <p>Please use "Add New Course" button to add your first course</p>
+            <Button buttonText="ADD NEW COURSE" data-testid="addCourse" />
+          </div>
+        </>
+      ) : (
+        <p></p>
+      )}
+    </>
   );
 };

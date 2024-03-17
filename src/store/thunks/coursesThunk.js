@@ -1,7 +1,17 @@
-// export const updateCourseThunk = () => {};
+import {
+  createCourse,
+  deleteCourseService,
+  getCourses,
+  updateCourseService,
+} from "../../services";
 
-// export const deleteCourseThunk = () => {};
+export const updateCourseThunk = (dispatch, payload) => () =>
+  updateCourseService(dispatch, payload);
 
-// export const createCourseThunk = () => {};
+export const deleteCourseThunk = (dispatch, id) => () =>
+  deleteCourseService(dispatch, id);
 
-// export const getCoursesThunk = () => {};
+export const createCourseThunk = (dispatch, payload) => () =>
+  createCourse(dispatch, payload);
+
+export const getCoursesThunk = () => getCourses;

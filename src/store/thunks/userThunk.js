@@ -1,3 +1,5 @@
-// export const getUserThunk = () => {};
+import { getCurrentUser, logout } from "../../services";
 
-// export const logoutThunk = () => {};
+export const getUserThunk = () => getCurrentUser;
+
+export const logoutThunk = () => logout;

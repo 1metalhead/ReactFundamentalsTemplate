@@ -51,23 +51,44 @@ import { Button, Input } from "../../common";
 import { getCourseDuration } from "../../helpers/getCourseDuration";
 import { CreateAuthor } from "../../components/CourseForm/components/CreateAuthor";
 import { AuthorItem } from "../../components/CourseForm/components/AuthorItem";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAuthorsSelector } from "../../store/selectors";
-import { saveCourse } from "../../store/slices/coursesSlice";
+import { getAuthorsSelector, getCoursesSelector } from "../../store/selectors";
+import {
+  createCourseThunk,
+  updateCourseThunk,
+} from "../../store/thunks/coursesThunk";
 
 export const CourseForm = () => {
   //write your code here
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { courseId } = useParams();
+  const courses = useSelector(getCoursesSelector);
   const authorsList = useSelector(getAuthorsSelector);
 
   const [localAuthorsList, setLocalAuthorsList] = useState(authorsList);
 
   useEffect(() => {
+    if (courseId) {
+      const currentCourse = courses.find((course) => course.id === courseId);
+      setMultipleValues({
+        title: currentCourse.title,
+        description: currentCourse.description,
+        duration: currentCourse.duration,
+      });
+
+      const currentAuthors = [];
+      currentCourse?.authors?.forEach((authors) => {
+        currentAuthors?.push(
+          authorsList?.find((author) => author.id === authors)
+        );
+      });
+      setCourseAuthors(currentAuthors);
+    }
     setLocalAuthorsList(authorsList);
-  }, [authorsList]);
+  }, [authorsList, courseId, courses]);
 
   const [multipleValues, setMultipleValues] = useState({
     title: "",
@@ -112,8 +133,7 @@ export const CourseForm = () => {
     const validObj = validateFields();
     if (validObj.title && validObj.description && validObj.duration) {
       dispatch(
-        saveCourse({
-          id: "xyz",
+        createCourseThunk(dispatch, {
           title: multipleValues.title,
           description: multipleValues.description,
           creationDate: "08/03/2021", //new Date(),
@@ -141,6 +161,23 @@ export const CourseForm = () => {
     });
   }
 
+  function handleUpdateCourse() {
+    const validObj = validateFields();
+    if (validObj.title && validObj.description && validObj.duration) {
+      dispatch(
+        updateCourseThunk(dispatch, {
+          id: courseId,
+          title: multipleValues.title,
+          description: multipleValues.description,
+          creationDate: "08/03/2021", //new Date(),
+          duration: Number(multipleValues.duration),
+          authors: courseAuthors.map((authors) => authors.id),
+        })
+      );
+      navigate("/courses");
+    }
+  }
+
   return (
     <div className={styles.container}>
       <h2>Course edit/Create page</h2>
@@ -153,6 +190,7 @@ export const CourseForm = () => {
           onChange={handleChange}
           name="title"
           showErrorRequired={!isValid.title}
+          value={multipleValues.title}
         ></Input>
         <label>
           Description
@@ -161,6 +199,7 @@ export const CourseForm = () => {
             data-testid="descriptionTextArea"
             onChange={handleChange}
             name="description"
+            value={multipleValues.description}
           />
         </label>
         {!isValid.description && (
@@ -177,6 +216,7 @@ export const CourseForm = () => {
                 type="number"
                 name="duration"
                 showErrorRequired={!isValid.duration}
+                value={multipleValues.duration}
               ></Input>
               <p>{duration}</p>
             </div>
@@ -212,11 +252,19 @@ export const CourseForm = () => {
 
       <div className={styles.buttonsContainer}>
         <Button buttonText="CANCEL"></Button>
-        <Button
-          buttonText="CREATE COURSE"
-          handleClick={handleCreateCourse}
-          data-testid="createCourseButton"
-        ></Button>
+        {courseId ? (
+          <Button
+            buttonText="UPDATE COURSE"
+            handleClick={handleUpdateCourse}
+            data-testid="updateCourseButton"
+          ></Button>
+        ) : (
+          <Button
+            buttonText="CREATE COURSE"
+            handleClick={handleCreateCourse}
+            data-testid="createCourseButton"
+          ></Button>
+        )}
       </div>
     </div>
   );

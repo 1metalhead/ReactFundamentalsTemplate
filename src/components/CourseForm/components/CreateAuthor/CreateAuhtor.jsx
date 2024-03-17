@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./styles.module.css";
 import { Button, Input } from "../../../../common";
 import { useDispatch } from "react-redux";
-import { saveAuthor } from "../../../../store/slices/authorsSlice";
+import { createAuthorThunk } from "../../../../store/thunks/authorsThunk";
 
 export const CreateAuthor = () => {
   // write your code here
@@ -25,7 +25,7 @@ export const CreateAuthor = () => {
         data-testid="createAuthorButton"
         handleClick={(event) => {
           event.preventDefault();
-          dispatch(saveAuthor({ name: authorName, id: "abc" }));
+          dispatch(createAuthorThunk(dispatch, authorName));
         }}
       ></Button>
     </div>

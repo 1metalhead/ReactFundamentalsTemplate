@@ -1,6 +1,5 @@
 // import React, { useState } from "react";
 
-import { useEffect } from "react";
 import styles from "./App.module.css";
 import {
   CourseInfo,
@@ -9,13 +8,13 @@ import {
   Registration,
   Login,
   CourseForm,
+  PrivateRoute,
 } from "./components";
 // import { mockedAuthorsList } from "./constants";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getAuthors, getCourses } from "./services";
-import { setCourses } from "./store/slices/coursesSlice";
-import { setAuthors } from "./store/slices/authorsSlice";
+import { getCoursesThunk } from "./store/thunks/coursesThunk";
+import { getAuthorsThunk } from "./store/thunks/authorsThunk";
 
 // Module 1:
 // * use mockedAuthorsList and mockedCoursesList mocked data
@@ -48,16 +47,19 @@ function App() {
 
   // const localCoursesList = useSelector((store) => store.courses);
   const dispatch = useDispatch();
-  const fetchInitData = async () => {
-    const courses = await getCourses();
-    dispatch(setCourses(courses.result));
-    const authors = await getAuthors();
-    dispatch(setAuthors(authors.result));
-  };
-  useEffect(() => {
-    fetchInitData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  dispatch(getCoursesThunk());
+  dispatch(getAuthorsThunk());
+
+  // const fetchInitData = async () => {
+  //   const courses = await getCourses();
+  //   dispatch(setCourses(courses.result));
+  //   const authors = await getAuthors();
+  //   dispatch(setAuthors(authors.result));
+  // };
+  // useEffect(() => {
+  //   fetchInitData();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   // let localCoursesList = useSelector((store) => {
   //   debugger;
@@ -82,13 +84,25 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route
             path="/courses/add"
-            element={<CourseForm></CourseForm>}
+            element={
+              <PrivateRoute>
+                <CourseForm></CourseForm>
+              </PrivateRoute>
+            }
           ></Route>
           <Route
             path="/courses/:courseId"
             element={<CourseInfo data-testid="courseInfo"></CourseInfo>}
           ></Route>
           <Route path="/courses" element={<Courses></Courses>}></Route>
+          <Route
+            path="/courses/update/:courseId"
+            element={
+              <PrivateRoute>
+                <CourseForm></CourseForm>
+              </PrivateRoute>
+            }
+          ></Route>
           <Route
             path="/"
             element={

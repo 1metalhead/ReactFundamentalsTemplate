@@ -41,12 +41,16 @@ import styles from "./styles.module.css";
 import { Button } from "../../../../common";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCourse } from "../../../../store/slices/coursesSlice";
-import { getAuthorsSelector } from "../../../../store/selectors";
+import {
+  getAuthorsSelector,
+  getUserRoleSelector,
+} from "../../../../store/selectors";
+import { deleteCourseThunk } from "../../../../store/thunks/coursesThunk";
 
 export const CourseCard = ({ course }) => {
   // write your code here
   const authorsList = useSelector(getAuthorsSelector);
+  const userRole = useSelector(getUserRoleSelector);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [currentAuthors, setCurrentAuthors] = useState([]);
@@ -92,12 +96,24 @@ export const CourseCard = ({ course }) => {
 				reuse Link component with editButtonIcon from 'src/assets' for 'Update' button with
 						data-testid="updateCourse" 
 			*/}
-          <Button
-            buttonText="DELETE"
-            data-testid="deleteCourse"
-            handleClick={() => dispatch(deleteCourse(course.id))}
-          ></Button>
-          <Button buttonText="UPDATE" data-testid="updateCourse"></Button>
+          {userRole === "admin" ? (
+            <>
+              <Button
+                buttonText="DELETE"
+                data-testid="deleteCourse"
+                handleClick={() =>
+                  dispatch(deleteCourseThunk(dispatch, course.id))
+                }
+              ></Button>
+              <Button
+                buttonText="UPDATE"
+                data-testid="updateCourse"
+                handleClick={() => navigate(`/courses/update/${course.id}`)}
+              ></Button>
+            </>
+          ) : (
+            ""
+          )}
           {/* <img
             src={deleteButtonIcon}
             data-testid="deleteCourse"

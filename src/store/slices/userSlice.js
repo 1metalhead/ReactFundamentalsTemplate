@@ -5,6 +5,7 @@ const initialState = {
   name: "",
   email: "",
   token: localStorage.getItem("token"),
+  role: "",
 };
 
 export const userSlice = createSlice({
@@ -12,12 +13,12 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUserData: (userData, payload) => {
-      debugger;
       return {
         isAuth: true,
         name: payload.payload.name,
         email: payload.payload.email,
         token: payload.payload.token,
+        role: payload.payload.role,
       };
     },
     removeUserData: (userData, payload) => initialState,

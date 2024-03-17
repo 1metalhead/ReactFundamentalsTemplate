@@ -10,7 +10,14 @@ export const coursesSlice = createSlice({
     saveCourse: (courses, payload) => [...courses, payload.payload],
     deleteCourse: (courses, payload) =>
       courses.filter((course) => course.id !== payload.payload),
-    // updateCourse:
+    updateCourse: (courses, payload) => {
+      return courses.map((course) => {
+        if (course.id === payload.payload.id) {
+          return payload.payload;
+        }
+        return course;
+      });
+    },
   },
 });
 
