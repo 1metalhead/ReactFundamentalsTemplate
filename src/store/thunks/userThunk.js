@@ -1,5 +1,5 @@
 import { getCurrentUser, logout } from "../../services";
-import { removeUserData, setUserData } from "../slices/userSlice";
+import { setUserData } from "../slices/userSlice";
 
 export const getUserThunk = (token) => {
   return async (dispatch) => {
@@ -10,7 +10,10 @@ export const getUserThunk = (token) => {
 
 export const logoutThunk = (token) => {
   return async (dispatch) => {
-    const result = await logout(token);
-    if (result) dispatch(removeUserData());
+    const user = await logout(token);
+    dispatch({
+      type: "user/removeUserData",
+      payload: user?.result,
+    });
   };
 };

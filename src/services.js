@@ -63,9 +63,11 @@ export const getCurrentUser = async (token) => {
 
 export const updateCourseService = async (payload, token) => {
   // write your code here
-  const response = await fetch(`http://localhost:4000/courses/${payload.id}`, {
+  const { id, ...courseData } = payload;
+
+  const response = await fetch(`http://localhost:4000/courses/${id}`, {
     method: "PUT",
-    body: JSON.stringify(payload),
+    body: JSON.stringify(courseData),
     headers: {
       "Content-Type": "application/json",
       Authorization: token,
