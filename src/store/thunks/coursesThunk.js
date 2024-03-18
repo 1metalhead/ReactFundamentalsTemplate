@@ -4,18 +4,37 @@ import {
   getCourses,
   updateCourseService,
 } from "../../services";
-import { setCourses } from "../slices/coursesSlice";
+import {
+  deleteCourse,
+  saveCourse,
+  setCourses,
+  updateCourse,
+} from "../slices/coursesSlice";
 
-export const updateCourseThunk = (dispatch, payload) => () =>
-  updateCourseService(dispatch, payload);
+export const updateCourseThunk = (payload) => {
+  return async (dispatch) => {
+    const result = await updateCourseService(payload);
+    dispatch(updateCourse(result.result));
+  };
+};
 
-export const deleteCourseThunk = (dispatch, id) => () =>
-  deleteCourseService(dispatch, id);
+export const deleteCourseThunk = (id) => {
+  return async (dispatch) => {
+    const result = await deleteCourseService(id);
+    if (result) dispatch(deleteCourse(id));
+  };
+};
 
-export const createCourseThunk = (dispatch, payload) => () =>
-  createCourse(dispatch, payload);
+export const createCourseThunk = (payload) => {
+  return async (dispatch) => {
+    const result = await createCourse(payload);
+    dispatch(saveCourse(result.result));
+  };
+};
 
-export const getCoursesThunk = async (dispatch) => {
-  const result = await getCourses();
-  dispatch(setCourses(result.result));
+export const getCoursesThunk = () => {
+  return async (dispatch) => {
+    const result = await getCourses();
+    dispatch(setCourses(result.result));
+  };
 };

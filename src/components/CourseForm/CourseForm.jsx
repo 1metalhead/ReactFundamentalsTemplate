@@ -133,7 +133,7 @@ export const CourseForm = () => {
     const validObj = validateFields();
     if (validObj.title && validObj.description && validObj.duration) {
       dispatch(
-        createCourseThunk(dispatch, {
+        createCourseThunk({
           title: multipleValues.title,
           description: multipleValues.description,
           creationDate: "08/03/2021", //new Date(),
@@ -165,7 +165,7 @@ export const CourseForm = () => {
     const validObj = validateFields();
     if (validObj.title && validObj.description && validObj.duration) {
       dispatch(
-        updateCourseThunk(dispatch, {
+        updateCourseThunk({
           id: courseId,
           title: multipleValues.title,
           description: multipleValues.description,

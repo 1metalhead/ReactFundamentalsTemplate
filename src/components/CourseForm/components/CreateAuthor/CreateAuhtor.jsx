@@ -25,7 +25,7 @@ export const CreateAuthor = () => {
         data-testid="createAuthorButton"
         handleClick={(event) => {
           event.preventDefault();
-          dispatch(createAuthorThunk(dispatch, authorName));
+          dispatch(createAuthorThunk(authorName));
         }}
       ></Button>
     </div>

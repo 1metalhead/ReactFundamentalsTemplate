@@ -15,6 +15,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getCoursesThunk } from "./store/thunks/coursesThunk";
 import { getAuthorsThunk } from "./store/thunks/authorsThunk";
+import { useEffect } from "react";
 
 // Module 1:
 // * use mockedAuthorsList and mockedCoursesList mocked data
@@ -47,8 +48,11 @@ function App() {
 
   // const localCoursesList = useSelector((store) => store.courses);
   const dispatch = useDispatch();
-  dispatch(() => getCoursesThunk(dispatch));
-  dispatch(getAuthorsThunk());
+  useEffect(() => {
+    dispatch(getCoursesThunk());
+    dispatch(getAuthorsThunk());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // const fetchInitData = async () => {
   //   const courses = await getCourses();

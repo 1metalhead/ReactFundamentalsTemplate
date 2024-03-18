@@ -101,9 +101,7 @@ export const CourseCard = ({ course }) => {
               <Button
                 buttonText="DELETE"
                 data-testid="deleteCourse"
-                handleClick={() =>
-                  dispatch(deleteCourseThunk(dispatch, course.id))
-                }
+                handleClick={() => dispatch(deleteCourseThunk(course.id))}
               ></Button>
               <Link
                 to={`/courses/update/${course.id}`}

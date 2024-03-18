@@ -1,12 +1,3 @@
-import { saveAuthor, setAuthors } from "./store/slices/authorsSlice";
-import {
-  deleteCourse,
-  saveCourse,
-  // setCourses,
-  updateCourse,
-} from "./store/slices/coursesSlice";
-import { removeUserData, setUserData } from "./store/slices/userSlice";
-
 export const createUser = async (data) => {
   // write your code here
   const newUser = {
@@ -44,12 +35,10 @@ export const getCourses = async () => {
       "Content-Type": "application/json",
     },
   }).catch((err) => new Error(err));
-  // const result = await response.json();
-  // dispatch(setCourses(result.result));
   return await response.json();
 };
 
-export const getAuthors = async (dispatch) => {
+export const getAuthors = async () => {
   // write your code here
   const response = await fetch("http://localhost:4000/authors/all", {
     method: "GET",
@@ -57,12 +46,10 @@ export const getAuthors = async (dispatch) => {
       "Content-Type": "application/json",
     },
   }).catch((err) => new Error(err));
-  const result = await response.json();
-  dispatch(setAuthors(result.result));
-  // return await response.json();
+  return await response.json();
 };
 
-export const getCurrentUser = async (dispatch) => {
+export const getCurrentUser = async () => {
   // write your code here
   const response = await fetch("http://localhost:4000/users/me", {
     method: "GET",
@@ -71,11 +58,10 @@ export const getCurrentUser = async (dispatch) => {
       Authorization: localStorage.getItem("token"),
     },
   }).catch((err) => new Error(err));
-  const result = await response.json();
-  dispatch(setUserData(result.result));
+  return await response.json();
 };
 
-export const updateCourseService = async (dispatch, payload) => {
+export const updateCourseService = async (payload) => {
   // write your code here
   const response = await fetch(`http://localhost:4000/courses/${payload.id}`, {
     method: "PUT",
@@ -85,35 +71,34 @@ export const updateCourseService = async (dispatch, payload) => {
       Authorization: localStorage.getItem("token"),
     },
   }).catch((err) => new Error(err));
-  const result = await response.json();
-  dispatch(updateCourse(result.result));
+  return await response.json();
 };
 
-export const logout = async (dispatch) => {
+export const logout = async () => {
   // write your code here
-  await fetch("http://localhost:4000/logout", {
+  const response = await fetch("http://localhost:4000/logout", {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       Authorization: localStorage.getItem("token"),
     },
   }).catch((err) => new Error(err));
-  dispatch(removeUserData());
+  return await response;
 };
 
-export const deleteCourseService = async (dispatch, id) => {
+export const deleteCourseService = async (id) => {
   // write your code here
-  await fetch(`http://localhost:4000/courses/${id}`, {
+  const response = await fetch(`http://localhost:4000/courses/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       Authorization: localStorage.getItem("token"),
     },
   }).catch((err) => new Error(err));
-  dispatch(deleteCourse(id));
+  return await response.json();
 };
 
-export const createCourse = async (dispatch, payload) => {
+export const createCourse = async (payload) => {
   // write your code here
   const response = await fetch("http://localhost:4000/courses/add", {
     method: "POST",
@@ -123,11 +108,10 @@ export const createCourse = async (dispatch, payload) => {
       Authorization: localStorage.getItem("token"),
     },
   }).catch((err) => new Error(err));
-  const result = await response.json();
-  dispatch(saveCourse(result.result));
+  return await response.json();
 };
 
-export const createAuthor = async (dispatch, name) => {
+export const createAuthor = async (name) => {
   // write your code here
   const response = await fetch("http://localhost:4000/authors/add", {
     method: "POST",
@@ -137,6 +121,5 @@ export const createAuthor = async (dispatch, name) => {
       Authorization: localStorage.getItem("token"),
     },
   }).catch((err) => new Error(err));
-  const result = await response.json();
-  dispatch(saveAuthor(result.result));
+  return await response.json();
 };
