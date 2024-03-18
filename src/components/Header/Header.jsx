@@ -42,8 +42,9 @@ export const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const token = localStorage.getItem("token");
   function handleClick() {
-    dispatch(logoutThunk());
+    dispatch(logoutThunk(token));
     localStorage.removeItem("token");
     navigate("/login");
   }

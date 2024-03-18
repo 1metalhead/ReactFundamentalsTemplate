@@ -50,7 +50,7 @@ export const Courses = () => {
   useEffect(() => {
     const isUserLoginToken = localStorage.getItem("token");
     if (isUserLoginToken) {
-      dispatch(getUserThunk());
+      dispatch(getUserThunk(isUserLoginToken));
     }
   }, [dispatch]);
 

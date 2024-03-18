@@ -49,63 +49,63 @@ export const getAuthors = async () => {
   return await response.json();
 };
 
-export const getCurrentUser = async () => {
+export const getCurrentUser = async (token) => {
   // write your code here
   const response = await fetch("http://localhost:4000/users/me", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: localStorage.getItem("token"),
+      Authorization: token,
     },
   }).catch((err) => new Error(err));
   return await response.json();
 };
 
-export const updateCourseService = async (payload) => {
+export const updateCourseService = async (payload, token) => {
   // write your code here
   const response = await fetch(`http://localhost:4000/courses/${payload.id}`, {
     method: "PUT",
     body: JSON.stringify(payload),
     headers: {
       "Content-Type": "application/json",
-      Authorization: localStorage.getItem("token"),
+      Authorization: token,
     },
   }).catch((err) => new Error(err));
   return await response.json();
 };
 
-export const logout = async () => {
+export const logout = async (token) => {
   // write your code here
   const response = await fetch("http://localhost:4000/logout", {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      Authorization: localStorage.getItem("token"),
+      Authorization: token,
     },
   }).catch((err) => new Error(err));
   return await response;
 };
 
-export const deleteCourseService = async (id) => {
+export const deleteCourseService = async (id, token) => {
   // write your code here
   const response = await fetch(`http://localhost:4000/courses/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      Authorization: localStorage.getItem("token"),
+      Authorization: token,
     },
   }).catch((err) => new Error(err));
   return await response.json();
 };
 
-export const createCourse = async (payload) => {
+export const createCourse = async (payload, token) => {
   // write your code here
   const response = await fetch("http://localhost:4000/courses/add", {
     method: "POST",
     body: JSON.stringify(payload),
     headers: {
       "Content-Type": "application/json",
-      Authorization: localStorage.getItem("token"),
+      Authorization: token,
     },
   }).catch((err) => new Error(err));
   return await response.json();

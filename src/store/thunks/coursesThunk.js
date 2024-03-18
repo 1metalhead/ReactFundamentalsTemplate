@@ -11,23 +11,23 @@ import {
   updateCourse,
 } from "../slices/coursesSlice";
 
-export const updateCourseThunk = (payload) => {
+export const updateCourseThunk = (payload, token) => {
   return async (dispatch) => {
-    const result = await updateCourseService(payload);
+    const result = await updateCourseService(payload, token);
     dispatch(updateCourse(result.result));
   };
 };
 
-export const deleteCourseThunk = (id) => {
+export const deleteCourseThunk = (id, token) => {
   return async (dispatch) => {
-    const result = await deleteCourseService(id);
+    const result = await deleteCourseService(id, token);
     if (result) dispatch(deleteCourse(id));
   };
 };
 
-export const createCourseThunk = (payload) => {
+export const createCourseThunk = (payload, token) => {
   return async (dispatch) => {
-    const result = await createCourse(payload);
+    const result = await createCourse(payload, token);
     dispatch(saveCourse(result.result));
   };
 };

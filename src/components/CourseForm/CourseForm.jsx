@@ -132,14 +132,18 @@ export const CourseForm = () => {
   function handleCreateCourse() {
     const validObj = validateFields();
     if (validObj.title && validObj.description && validObj.duration) {
+      const token = localStorage.getItem("token");
       dispatch(
-        createCourseThunk({
-          title: multipleValues.title,
-          description: multipleValues.description,
-          creationDate: "08/03/2021", //new Date(),
-          duration: Number(multipleValues.duration),
-          authors: courseAuthors.map((authors) => authors.id),
-        })
+        createCourseThunk(
+          {
+            title: multipleValues.title,
+            description: multipleValues.description,
+            creationDate: "08/03/2021", //new Date(),
+            duration: Number(multipleValues.duration),
+            authors: courseAuthors.map((authors) => authors.id),
+          },
+          token
+        )
       );
       navigate("/courses");
     }
@@ -164,15 +168,19 @@ export const CourseForm = () => {
   function handleUpdateCourse() {
     const validObj = validateFields();
     if (validObj.title && validObj.description && validObj.duration) {
+      const token = localStorage.getItem("token");
       dispatch(
-        updateCourseThunk({
-          id: courseId,
-          title: multipleValues.title,
-          description: multipleValues.description,
-          creationDate: "08/03/2021", //new Date(),
-          duration: Number(multipleValues.duration),
-          authors: courseAuthors.map((authors) => authors.id),
-        })
+        updateCourseThunk(
+          {
+            id: courseId,
+            title: multipleValues.title,
+            description: multipleValues.description,
+            creationDate: "08/03/2021", //new Date(),
+            duration: Number(multipleValues.duration),
+            authors: courseAuthors.map((authors) => authors.id),
+          },
+          token
+        )
       );
       navigate("/courses");
     }

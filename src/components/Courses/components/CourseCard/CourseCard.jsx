@@ -65,6 +65,11 @@ export const CourseCard = ({ course }) => {
     });
   }, [authorsList, course]);
 
+  const onDeleteButtonClick = () => {
+    const token = localStorage.getItem("token");
+    dispatch(deleteCourseThunk(course?.id, token));
+  };
+
   return (
     <div className={styles.cardContainer} data-testid="courseCard">
       <div className={styles.cardText}>
@@ -101,7 +106,7 @@ export const CourseCard = ({ course }) => {
               <Button
                 buttonText="DELETE"
                 data-testid="deleteCourse"
-                handleClick={() => dispatch(deleteCourseThunk(course.id))}
+                handleClick={onDeleteButtonClick}
               ></Button>
               <Link
                 to={`/courses/update/${course.id}`}
