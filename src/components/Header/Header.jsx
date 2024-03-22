@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./styles.module.css";
 import { Logo } from "./components";
 import { Button } from "../../common";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutThunk } from "../../store/thunks/userThunk";
 
@@ -41,7 +41,7 @@ export const Header = () => {
   const userDetails = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
   const token = localStorage.getItem("token");
   function handleClick() {
     dispatch(logoutThunk(token));
@@ -49,21 +49,21 @@ export const Header = () => {
     navigate("/login");
   }
 
-  const showUsername =
-    localStorage.getItem("token") &&
-    location.pathname !== "/login" &&
-    location.pathname !== "/registration";
+  // const showUsername =
+  //   localStorage.getItem("token") &&
+  //   location.pathname !== "/login" &&
+  //   location.pathname !== "/registration";
 
   return (
     <div className={styles.headerContainer}>
       <Logo></Logo>
       <div className={styles.userContainer}>
-        {showUsername && (
-          <>
-            <p className={styles.userName}>{userDetails.name}</p>
-            <Button buttonText="LOGOUT" handleClick={handleClick}></Button>
-          </>
-        )}
+        {/* {showUsername && (
+          <> */}
+        <p className={styles.userName}>{userDetails.name}</p>
+        <Button buttonText="LOGOUT" handleClick={handleClick}></Button>
+        {/* </>
+        )} */}
       </div>
     </div>
   );
