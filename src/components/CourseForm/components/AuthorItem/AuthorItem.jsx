@@ -6,7 +6,7 @@ import { Button } from "../../../../common";
 export const AuthorItem = ({ author, addAuthor, removeAuthor }) => {
   return (
     <div className={styles.authorItem} data-testid="authorItem">
-      <span>{author.name}</span>
+      <span>{author?.name}</span>
       {addAuthor ? (
         <Button
           buttonText="+"
